@@ -6,7 +6,9 @@ phases:
       - curl -sS -o aws-iam-authenticator https://amazon-eks.s3.us-west-1.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
       - curl -sS -o kubectl https://amazon-eks.s3.us-west-1.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/kubectl
       - chmod +x ./kubectl ./aws-iam-authenticator
+      - pwd
       - export PATH=$PWD/:$PATH
+      - pwd
       - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
   pre_build:
       commands:
@@ -38,9 +40,9 @@ phases:
       # - kubectl apply -f simple-jwt-api.yml
       # - kubectl apply -f ci-cd-codepipeline.cfn.yml
       - pwd
+      - ls
       - kubectl apply -f simple_jwt_api.yml
       - printf '[{"name":"simple_jwt_api","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
-      - ls
 artifacts:
   files: build.json
 env:
